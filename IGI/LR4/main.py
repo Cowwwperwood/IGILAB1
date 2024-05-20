@@ -6,7 +6,6 @@ from task4.task4 import task4
 from task5.task5 import task5
 
 
-
 while True:
     choice = int(input("please, enter the number of task or '0' for end: "))
 

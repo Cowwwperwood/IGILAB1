@@ -154,7 +154,6 @@ def task2():
                     print(key, ' : ', value)
             case 2:
                 text = Text(read_from_file('test2.txt'))
-                string = text.text
                 result = text.task()
                 save_to_zip(result, 'output2')
                 for key, value in result.items():

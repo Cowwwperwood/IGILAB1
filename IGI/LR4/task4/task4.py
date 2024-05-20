@@ -4,15 +4,21 @@ import matplotlib.pyplot as plt
 import numpy as np
 
 
+class MyMixin:
+    def log(self):
+        print("Mixin func activated")
+
+
 class GeometricFigure(ABC):
     @abstractmethod
     def calculate_area(self):
         pass
 
 
-class FigureColor:
+class FigureColor(MyMixin):
     def __init__(self, color):
         self._color = color
+        self.log()
 
     @property
     def color(self):

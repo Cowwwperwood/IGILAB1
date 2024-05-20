@@ -23,10 +23,10 @@ class SeriesPlotBuilder:
         plt.plot(x, y1, label='e^x', color='r')
         plt.plot(x, y2, label='Series', color='g')
 
-        plt.legend()
         plt.xlabel('x')
         plt.ylabel('y')
         plt.title('Series Convergence for e^x')
+        plt.legend()
 
         plt.grid(True)
         plt.savefig(r'plots.png', dpi=300)
@@ -39,7 +39,6 @@ class Series:
         self._eps = eps
 
     def calculateSeries(self):
-        """Функция для вычисления суммы ряда с заданной точностью"""
         series = []
         seriesResult = 0.0
         for i in range(500):
