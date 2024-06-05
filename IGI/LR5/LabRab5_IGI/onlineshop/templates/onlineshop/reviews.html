@@ -1,0 +1,56 @@
+{% extends 'base_generic.html' %}
+
+{% block content %}
+<div class="container">
+    <h1>Отзывы</h1>
+
+    {% if reviews %}
+    <div class="row">
+        {% for review in reviews %}
+        <div class="col-md-4 mb-4">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">{{ review.user.username }}</h5>
+                    <p class="card-text">
+                        {% for i in ""|ljust:review.rating %}
+                        ★
+                        {% endfor %}
+                        - {{ review.text }}
+                    </p>
+                    <p class="card-text"><small class="text-muted">Оставлено {{ review.created_at|timesince }} назад</small></p>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    {% else %}
+    <p>Пока нет отзывов.</p>
+    {% endif %}
+
+    {% if user.is_authenticated %}
+    <div class="mt-4">
+        <h2>Добавить отзыв</h2>
+        <form method="POST" action="{% url 'add_review' %}">
+            {% csrf_token %}
+            <div class="form-group">
+                <label for="rating">Оценка</label>
+                <select id="rating" name="rating" class="form-control">
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                    <option value="5">5</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="text">Отзыв</label>
+                <textarea id="text" name="text" class="form-control" rows="4"></textarea>
+            </div>
+            <button type="submit" class="btn btn-primary mt-2">Отправить</button>
+        </form>
+    </div>
+    {% else %}
+    <p>Пожалуйста, <a href="{% url 'login' %}">войдите</a>
+    {% endif %}
+</div>
+{% endblock %}

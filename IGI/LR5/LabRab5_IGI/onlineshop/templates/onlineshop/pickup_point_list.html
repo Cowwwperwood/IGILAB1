@@ -1,0 +1,20 @@
+{% extends "base_generic.html" %}
+
+{% block content %}
+    <h1>Точки самовывоза</h1>
+
+    {% if pickup_points %}
+    <ul>
+        {% for point in pickup_points %}
+        <li>
+            <h3>{{ point.name }}</h3>
+            <p>{{ point.address }}</p>
+            <p>Координаты: {{ point.latitude }}, {{ point.longitude }}</p>
+            <p>Режим работы: {{ point.work_hours }}</p>
+        </li>
+        {% endfor %}
+    </ul>
+    {% else %}
+        <p>Нет доступных точек самовывоза.</p>
+    {% endif %}
+{% endblock %}

@@ -1,0 +1,19 @@
+{% extends "base_generic.html" %}
+
+{% block content %}
+  <h1>Компания: {{ manufacturer.name }}</h1>
+
+  <p><strong>Описание:</strong> {{ manufacturer.description }}</p>
+  <p><strong>Местоположение:</strong> {{ manufacturer.location }}</p>
+
+  <div style="margin-left:20px;margin-top:20px">
+    <h4>Продукты</h4>
+
+    {% for product in manufacturer.product_set.all %}
+    <hr>
+    <p><strong>Название продукта:</strong> <a href="{{ product.get_absolute_url }}">{{ product.name }}</a></p>
+    <p><strong>Цена:</strong> {{ product.price }}</p>
+    <p class="text-muted"><strong>Id:</strong> {{ product.id }}</p>
+    {% endfor %}
+  </div>
+{% endblock %}

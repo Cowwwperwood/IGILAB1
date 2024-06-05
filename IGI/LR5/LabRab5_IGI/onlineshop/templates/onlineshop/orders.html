@@ -1,0 +1,49 @@
+{% extends 'base_generic.html' %}
+
+{% block content %}
+<h1>Все заказы</h1>
+
+<table>
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Пользователь</th>
+            <th>Дата заказа</th>
+            <th>Тип продукта</th>
+            <th>Цена</th>
+            <th>Имя</th>
+            <th>Фамилия</th>
+            <th>Телефон</th>
+            <th>Адрес</th>
+            <th>Действие</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for order in orders %}
+        <tr>
+            <form method="POST" action="{% url 'edit_order' order.id %}">
+                {% csrf_token %}
+                <td>{{ order.id }}</td>
+                <td>{{ order.user }}</td>
+                <td>{{ order.order_date }}</td>
+                <td>{{ order.product_name }}</td>
+                <td>{{ order.product_price }}</td>
+                <td><input type="text" name="name" value="{{ order.name }}"></td>
+                <td><input type="text" name="surname" value="{{ order.surname }}"></td>
+                <td><input type="text" name="phone" value="{{ order.phone }}"></td>
+                <td><input type="text" name="address" value="{{ order.address }}"></td>
+                <td>
+                    {% if not order.is_completed %}
+                    <a href="{% url 'mark_as_completed' order.id %}" class="btn btn-primary">Отметить как выполненный</a>
+                    {% else %}
+                    <span class="text-success">Выполнено</span>
+                    {% endif %}
+                    <button type="submit" class="btn btn-secondary">Сохранить</button>
+                    <a href="{% url 'delete_order' order.id %}" class="btn btn-danger">Удалить</a>
+                </td>
+            </form>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

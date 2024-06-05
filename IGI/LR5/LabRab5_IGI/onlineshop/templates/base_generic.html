@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    {% block title %}<title>Online Shop</title>{% endblock %}
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}" />
+  </head>
+
+  <body>
+    <div class="container">
+      <div class="sidebar">
+        {% block sidebar %}
+          <ul class="sidebar-nav">
+            <li><a href="{% url 'index' %}">Главная страница</a></li>
+            <li><a href="{% url 'products' %}">Продукты</a></li>
+            <li><a href="{% url 'manufacturers' %}">Производители</a></li>
+            <li><a href="{% url 'contacts' %}">Контакты</a></li>
+            <li><a href="{% url 'vacation' %}">Вакансии</a></li>
+            <li><a href="{% url 'reviews' %}">Отзывы</a></li>
+            <li><a href="{% url 'privacy_policy' %}">Политика Конфиденциальности</a></li>
+            <li><a href="{% url 'news_list' %}">Новости</a></li>
+            <li><a href="{% url 'faq_list' %}">Вопросы</a></li>
+            <li><a href="{% url 'coupon_list' %}">Купоны</a></li>
+
+
+
+             {% if user.is_authenticated %}
+                <li><a href="{% url 'pickup_points' %}">Точки самовывоза</a></li>
+                <li><a href="{% url 'user_sales' %}">Ваши покупки</a></li>
+                {% if user.is_superuser or user.is_staff %}
+                    <li><a href="{% url 'orders' %}">Все заказы</a></li>
+                    <li><a href="{% url 'sales' %}">Все продажи</a></li>
+                    <li><a href="{% url 'sales_by_hour' %}">Статистика продаж</a></li>
+
+                {% endif %}
+                <li>Пользователь: {{ user.get_username }}</li>
+                <form action="{% url 'logout' %}" method="post">
+                    {% csrf_token %}
+                    <input type="hidden" name="next" value="{% url 'index' %}">
+                    <button type="submit">Выход из аккаунта</button>
+                </form>
+            {% else %}
+                <li><a href="{% url 'login'%}?next={{request.path}}">Авторизация</a></li>
+                <li><a href="{% url 'register' %}">Регистрация</a></li>
+            {% endif %}
+          </ul>
+        {% endblock %}
+      </div>
+      <div class="content">{% block content %}{% endblock %}
+      {% block pagination %}
+  {% if is_paginated %}
+    <div class="pagination">
+      <span class="page-links">
+        {% if page_obj.has_previous %}
+          <a href="{{ request.path }}?page={{ page_obj.previous_page_number }}">previous</a>
+        {% endif %}
+        <span class="page-current">
+          Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.
+        </span>
+        {% if page_obj.has_next %}
+          <a href="{{ request.path }}?page={{ page_obj.next_page_number }}">next</a>
+        {% endif %}
+      </span>
+    </div>
+  {% endif %}
+{% endblock %}
+      </div>
+    </div>
+  </body>
+</html>

@@ -1,0 +1,14 @@
+{% extends 'base_generic.html' %}
+
+{% load static %}
+
+
+{% block content %}
+<h1>Продажи по часам</h1>
+
+<p>Ниже представлен график количества продаж по часам:</p>
+
+<img src="{% static 'sales_by_hour2.png' %}" alt="Продажи по часам">
+
+{% endblock %}
+

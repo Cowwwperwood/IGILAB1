@@ -1,0 +1,15 @@
+{% extends 'base_generic.html' %}
+
+{% block content %}
+<h1>Новости</h1>
+<div class="news-list">
+    {% for article in articles %}
+    <div class="news-article">
+        <h2>{{ article.title }}</h2>
+        <p>{{ article.summary }}</p>
+        <img src="{{ article.image.url }}" alt="{{ article.title }}">
+        <p><small>Опубликовано: {{ article.publication_date }}</small></p>
+    </div>
+    {% endfor %}
+</div>
+{% endblock %}

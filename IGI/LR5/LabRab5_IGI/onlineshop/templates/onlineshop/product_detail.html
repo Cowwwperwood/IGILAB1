@@ -1,0 +1,62 @@
+{% extends "base_generic.html" %}
+
+{% block content %}
+
+<h1>Название продукта: {{ product.name }}</h1>
+<p><strong>Описание:</strong> {{ product.description }}</p>
+<p><strong>Цена:</strong> {{ product.price }}</p>
+<p><strong>Тип продукта:</strong> {{ product.product_type }}</p>
+<p><strong>Количество:</strong> {{ product.unit_of_measure }}</p>
+<p><strong>Производитель:</strong> <a href="">{{ product.manufacturer }}</a></p>
+
+{% if user.is_authenticated %}
+
+  {% if phone_error %}
+  <div class="alert alert-danger">{{ phone_error }}</div>
+  {% endif %}
+
+  {% if email_error %}
+  <div class="alert alert-danger">{{ email_error }}</div>
+  {% endif %}
+
+  <form method="post">
+    {% csrf_token %}
+    <input type="hidden" name="product_name" value="{{ product.name }}">
+    <input type="hidden" name="product_price" value="{{ product.price }}">
+
+    <div class="form-group">
+      <label for="name">Имя</label>
+      <input type="text" class="form-control" id="name" name="name" value="{{ user.first_name }}" required>
+    </div>
+
+    <div class="form-group">
+      <label for="surname">Фамилия</label>
+      <input type="text" class="form-control" id="surname" name="surname" value="{{ user.last_name }}" required>
+    </div>
+
+    <div class="form-group">
+      <label for="phone">Телефон</label>
+      <input type="tel" class="form-control" id="phone" name="phone" value="{{ user.clientdata.phone_number }}" required>
+    </div>
+
+    <div class="form-group">
+      <label for="email">Электронная почта</label>
+      <input type="email" class="form-control" id="email" name="email" value="{{ user.email }}" required>
+    </div>
+
+    <div class="form-group">
+      <label for="address">Адрес</label>
+      <input type="text" class="form-control" id="address" name="address" value="{{ user.clientdata.address }}" required>
+    </div>
+
+    <div class="form-group">
+      <label for="coupon">Промокод (необязательно)</label>
+      <input type="text" class="form-control" id="coupon" name="coupon">
+    </div>
+
+    <button type="submit" class="btn btn-primary">Разместить заказ</button>
+  </form>
+
+{% endif %}
+
+{% endblock %}

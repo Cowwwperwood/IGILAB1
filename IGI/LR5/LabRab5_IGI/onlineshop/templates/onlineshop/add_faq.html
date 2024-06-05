@@ -1,0 +1,19 @@
+{% extends 'base_generic.html' %}
+
+{% block content %}
+<div class="container">
+    <h1>Добавить новый вопрос</h1>
+    <form method="POST">
+        {% csrf_token %}
+        <div class="form-group">
+            <label for="question">Вопрос</label>
+            <input type="text" class="form-control" id="question" name="question" required>
+        </div>
+        <div class="form-group">
+            <label for="answer">Ответ</label>
+            <textarea class="form-control" id="answer" name="answer" rows="4" required></textarea>
+        </div>
+        <button type="submit" class="btn btn-primary mt-2">Отправить</button>
+    </form>
+</div>
+{% endblock %}

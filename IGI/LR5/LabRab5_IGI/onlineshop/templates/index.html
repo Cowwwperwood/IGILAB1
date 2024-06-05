@@ -1,0 +1,26 @@
+{% extends "base_generic.html" %}
+
+{% block content %}
+<div style="text-align: center;">
+  <h1>Онлайн магазин BAZAR</h1>
+  <p>Добро пожаловать в  <em>BAZAR Online </em></p>
+</div>
+
+  {% load static %}
+  <div style="text-align: center;">
+  <img src="{% static 'pomidor.jpg' %}" alt="Online Shop BAZAR" style="max-width: 100%;">
+</div>
+
+<div style="text-align: center;">
+  <h2>Динамическая информация</h2>
+  <p>
+    Вы посетили страницу {{ num_visits }}{% if num_visits == 1 %} раз
+    {% else %} раз{% endif %}.
+  </p>
+  <p>
+    Общая сумма продаж: {{ total_sales|floatformat:2 }} руб.
+  </p>
+</div>
+
+
+{% endblock %}

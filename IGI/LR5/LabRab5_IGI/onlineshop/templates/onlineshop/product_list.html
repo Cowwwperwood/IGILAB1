@@ -1,0 +1,30 @@
+{% extends "base_generic.html" %}
+
+{% block content %}
+    <h1>Список продуктов</h1>
+
+    <form method="get">
+        <label for="min_price">Минимальная цена:</label>
+        <input type="number" id="min_price" name="min_price" step="0.01">
+        <label for="max_price">Максимальная цена:</label>
+        <input type="number" id="max_price" name="max_price" step="0.01">
+        <label for="order_by">Сортировка:</label>
+        <select id="order_by" name="order_by">
+            <option value="-price">По убыванию цены</option>
+            <option value="price">По возрастанию цены</option>
+        </select>
+        <button type="submit">Фильтровать</button>
+    </form>
+
+    {% if product_list %}
+    <ul>
+        {% for product in product_list %}
+        <li>
+            <a href="{{ product.get_absolute_url }}">{{ product.name }}</a> ({{ product.price }})
+        </li>
+        {% endfor %}
+    </ul>
+    {% else %}
+        <p>There are no products in the online-shop.</p>
+    {% endif %}
+{% endblock %}
